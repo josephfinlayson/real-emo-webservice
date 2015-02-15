@@ -4,7 +4,7 @@ angular.module('realEmoWebserviceApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('main', {
-        url: '/',
+        url: '/:userID',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
