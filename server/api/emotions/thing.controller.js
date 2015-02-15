@@ -13,53 +13,86 @@ var _ = require('lodash');
 var Thing = require('./thing.model');
 
 // Get list of things
-exports.index = function(req, res) {
+exports.index = function (req, res) {
   Thing.find(function (err, things) {
-    if(err) { return handleError(res, err); }
+    console.log(things);
+    if (err) {
+      return handleError(res, err);
+    }
     return res.json(200, things);
   });
 };
 
 // Get a single thing
-exports.show = function(req, res) {
+exports.show = function (req, res) {
   Thing.findById(req.params.id, function (err, thing) {
-    if(err) { return handleError(res, err); }
-    if(!thing) { return res.send(404); }
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!thing) {
+      return res.send(404);
+    }
     return res.json(thing);
   });
 };
 
 // Creates a new thing in the DB.
-exports.create = function(req, res) {
-  Thing.create(req.body, function(err, thing) {
+exports.create = function (req, res) {
+  var objectsSaved = [];
+  req.body.forEach(function (emotionObject, index) {
 
+    emotionObject.timestampBegin = new Date(emotionObject.timestampBegin)
+    emotionObject.timestampEnd = new Date(emotionObject.timestampEnd)
 
-    if(err) { return handleError(res, err); }
-    return res.json(201, thing);
-  });
+    Thing.create(req.body, function (err, emotionObject) {
+      if (err) {
+        return handleError(res, err);
+      } else {
+        objectsSaved.push(emotionObject);
+      }
+      if (index === req.body.length - 1) {
+        return res.json(201, objectsSaved);
+      }
+    });
+  })
+
 };
 
 // Updates an existing thing in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
+exports.update = function (req, res) {
+  if (req.body._id) {
+    delete req.body._id;
+  }
   Thing.findById(req.params.id, function (err, thing) {
-    if (err) { return handleError(res, err); }
-    if(!thing) { return res.send(404); }
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!thing) {
+      return res.send(404);
+    }
     var updated = _.merge(thing, req.body);
     updated.save(function (err) {
-      if (err) { return handleError(res, err); }
+      if (err) {
+        return handleError(res, err);
+      }
       return res.json(200, thing);
     });
   });
 };
 
 // Deletes a thing from the DB.
-exports.destroy = function(req, res) {
+exports.destroy = function (req, res) {
   Thing.findById(req.params.id, function (err, thing) {
-    if(err) { return handleError(res, err); }
-    if(!thing) { return res.send(404); }
-    thing.remove(function(err) {
-      if(err) { return handleError(res, err); }
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!thing) {
+      return res.send(404);
+    }
+    thing.remove(function (err) {
+      if (err) {
+        return handleError(res, err);
+      }
       return res.send(204);
     });
   });
