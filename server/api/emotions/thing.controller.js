@@ -11,7 +11,7 @@
 
 var _ = require('lodash');
 var Thing = require('./thing.model');
-
+var moment = require('moment')
 // Get list of things
 exports.index = function (req, res) {
 
@@ -56,7 +56,7 @@ exports.create = function (req, res) {
 
     var momentEnd = moment(emotionObject.timestampEnd);
     var momentBegin = moment(emotionObject.timestampBegin);
-    emotionObject.duration = momentBegin.diff(momentEnd)
+    emotionObject.duration = momentEnd.diff(momentBegin)
 
     Thing.create(emotionObject, function (err, emotionObject) {
       if (err) {
