@@ -35,6 +35,8 @@ angular.module('realEmoWebserviceApp')
 
         $scope.emotions.allEmotions = obj;
       }
+      $interval(      calcEmotions()
+, 200      )
 
     });
     //}, 5000);
