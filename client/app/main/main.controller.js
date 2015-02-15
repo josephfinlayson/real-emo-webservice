@@ -15,12 +15,12 @@ angular.module('realEmoWebserviceApp')
         var posDur = 0;
         var negDur = 0;
 
-        $scope.emotions.labels = ['positive', 'negative']
+        $scope.emotions.labels = ['Positive (s)', 'Negative (s)']
         console.log(emotions)
 
         emotions.forEach(function (emote) {
           if (emote.duration && emote.username === $stateParams.userID) {
-            if (emote.emotion.mood === 'positive' || 'POSITIVE') {
+            if (emote.emotion.mood === 'POSITIVE') {
               posDur += emote.duration
             }
             else {
@@ -29,6 +29,9 @@ angular.module('realEmoWebserviceApp')
           }
 
         })
+
+        posDur = posDur/1000
+        negDur = negDur/1000
 
         obj.push(posDur)
         obj.push(negDur)
