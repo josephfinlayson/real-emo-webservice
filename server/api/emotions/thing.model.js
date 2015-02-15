@@ -7,7 +7,8 @@ var ThingSchema = new Schema({
   emotion: Object,
   timestampBegin: Date,
   timestampEnd: Date,
-  duration: Number
+  duration: Number,
+  username: String
 });
 
 module.exports = mongoose.model('Thing', ThingSchema);
