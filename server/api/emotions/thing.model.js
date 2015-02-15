@@ -5,8 +5,9 @@ var mongoose = require('mongoose'),
 
 var ThingSchema = new Schema({
   emotion: Object,
-  timestampBegin: String,
-  timestampEnd: String
+  timestampBegin: Date,
+  timestampEnd: Date,
+  duration: Number
 });
 
 module.exports = mongoose.model('Thing', ThingSchema);

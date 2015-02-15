@@ -1,22 +1,15 @@
 'use strict';
 
 angular.module('realEmoWebserviceApp')
-  .controller('MainCtrl', function ($scope, $http) {
-    $scope.awesomeThings = [];
+  .controller('MainCtrl', function ($scope, $http,$interval) {
+  var emotions = {}
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-    });
+    $interval(function(){
+      $http.get('/emotions').success(function(emotions) {
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
+        $scope.emotions.allEmotions = emotions;
+      });
+    }, 5000);
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
+
   });

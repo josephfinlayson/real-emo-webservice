@@ -14,11 +14,21 @@ var Thing = require('./thing.model');
 
 // Get list of things
 exports.index = function (req, res) {
-  Thing.find(function (err, things) {
-    console.log(things);
+
+  Thing.find({
+    "timestampBegin": {
+      "$gte": new Date(2012)
+      //"$lt": new Date(2015, 7, 15)
+    }
+
+  }, function (err, things) {
     if (err) {
       return handleError(res, err);
     }
+    things.forEach(function (thing) {
+
+
+    })
     return res.json(200, things);
   });
 };
@@ -44,10 +54,15 @@ exports.create = function (req, res) {
     emotionObject.timestampBegin = new Date(emotionObject.timestampBegin)
     emotionObject.timestampEnd = new Date(emotionObject.timestampEnd)
 
-    Thing.create(req.body, function (err, emotionObject) {
+    var momentEnd = moment(emotionObject.timestampEnd);
+    var momentBegin = moment(emotionObject.timestampBegin);
+    emotionObject.duration = momentBegin.diff(momentEnd)
+
+    Thing.create(emotionObject, function (err, emotionObject) {
       if (err) {
         return handleError(res, err);
-      } else {
+      }
+      else {
         objectsSaved.push(emotionObject);
       }
       if (index === req.body.length - 1) {
