@@ -51,8 +51,8 @@ exports.create = function (req, res) {
   var objectsSaved = [];
   req.body.forEach(function (emotionObject, index) {
 
-    emotionObject.timestampBegin = new Date(emotionObject.timestampBegin)
-    emotionObject.timestampEnd = new Date(emotionObject.timestampEnd)
+    emotionObject.timestampBegin =  moment(emotionObject.timestampBegin,'DDMMYYYYHHmmssSSS')
+    emotionObject.timestampEnd = moment(emotionObject.timestampEnd, 'DDMMYYYYHHmmssSSS')
 
     var momentEnd = moment(emotionObject.timestampEnd);
     var momentBegin = moment(emotionObject.timestampBegin);
