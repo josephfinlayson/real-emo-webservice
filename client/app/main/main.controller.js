@@ -19,7 +19,7 @@ angular.module('realEmoWebserviceApp')
         console.log(emotions)
 
         emotions.forEach(function (emote) {
-          if (emote.duration && emote.username === $stateParams.userID) {
+          if (emote.duration && emote.username === $stateParams.userID || !$stateParams.userID ) {
             if (emote.emotion.mood === 'POSITIVE') {
               posDur += emote.duration
             }

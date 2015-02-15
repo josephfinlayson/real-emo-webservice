@@ -50,14 +50,14 @@ exports.show = function (req, res) {
 exports.create = function (req, res) {
   var objectsSaved = [];
   req.body.forEach(function (emotionObject, index) {
-
+                                                                         //15022015214741857
     emotionObject.timestampBegin =  moment(emotionObject.timestampBegin,'DDMMYYYYHHmmssSSS')
     emotionObject.timestampEnd = moment(emotionObject.timestampEnd, 'DDMMYYYYHHmmssSSS')
 
     var momentEnd = moment(emotionObject.timestampEnd);
     var momentBegin = moment(emotionObject.timestampBegin);
 
-    emotionObject.duration = momentEnd.diff(momentBegin)
+    emotionObject.duration = emotionObject.timestampEnd - emotionObject.timestampBegin
 
     Thing.create(emotionObject, function (err, emotionObject) {
       if (err) {

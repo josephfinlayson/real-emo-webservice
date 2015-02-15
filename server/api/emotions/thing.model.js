@@ -8,7 +8,7 @@ var ThingSchema = new Schema({
   timestampBegin: Date,
   timestampEnd: Date,
   duration: Number,
-  username: String
+  userID: String
 });
 
 module.exports = mongoose.model('Thing', ThingSchema);
