@@ -7,17 +7,35 @@ angular.module('realEmoWebserviceApp')
     //$interval(function(){
     $http.get('/emotions').success(function (emotions) {
       console.log(emotions)
-      var obj = {}
-      $scope.emotions.labels = ['positive', 'negative']
-      emotions.forEach(function (emote) {
-        obj[emote.emotion.mood] = 0
-        obj[emote.emotion.mood] += emote.duration || 0
-        obj = [
-          [65, 100],
-        ];
+      var obj = []
+      var posDur = 0;
+      var negDur = 0;
 
-      })
-      $scope.emotions.allEmotions = obj;
+      $scope.emotions.labels = ['positive', 'negative']
+      console.log(emotions)
+      //debugger;
+      function calcEmotions() {
+
+        emotions.forEach(function (emote) {
+          if (emote.duration) {
+            if (emote.emotion.mood === 'positive') {
+              posDur += emote.duration
+            }
+            else {
+              negDur += emote.duration
+            }
+          }
+
+        })
+
+        obj.push(posDur)
+        obj.push(negDur)
+
+        obj = [obj]
+
+        $scope.emotions.allEmotions = obj;
+      }
+
     });
     //}, 5000);
 

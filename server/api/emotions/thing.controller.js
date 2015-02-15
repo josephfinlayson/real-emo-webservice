@@ -56,6 +56,7 @@ exports.create = function (req, res) {
 
     var momentEnd = moment(emotionObject.timestampEnd);
     var momentBegin = moment(emotionObject.timestampBegin);
+
     emotionObject.duration = momentEnd.diff(momentBegin)
 
     Thing.create(emotionObject, function (err, emotionObject) {
